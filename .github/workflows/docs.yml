@@ -40,8 +40,28 @@ jobs:
           helm repo add goharbor https://helm.goharbor.io
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
         env:
           CR_TOKEN: "${{ secrets.FTL_CHARTS_TOKEN }}"
+        shell: bash
+        run: |
+          owner=stuartwdouglas
+          repo=ftl-charts
+          
+          args=(--owner "$owner" --repo "$repo")
+          args+=(--charts-dir "charts")
+          
+          install="$RUNNER_TOOL_CACHE/cr/${{ inputs.version }}/$(uname -m)"
+          echo "$install" >> "$GITHUB_PATH"
+          args+=(--install-dir "$install")
+          
+          "$GITHUB_ACTION_PATH/cr.sh" "${args[@]}"
+          
+          if [[ -f changed_charts.txt ]]; then
+              cat changed_charts.txt >> "$GITHUB_OUTPUT"
+          fi
+          if [[ -f chart_version.txt ]]; then
+              cat chart_version.txt >> "$GITHUB_OUTPUT"
+          fi
+          rm -f changed_charts.txt chart_version.txt
 
 
