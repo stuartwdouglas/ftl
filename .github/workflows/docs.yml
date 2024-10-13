@@ -24,7 +24,8 @@ jobs:
       - name: Copy Charts
         run: |
           cp -r .ftl/charts/ charts/
-          find .
+          git add charts
+          git commit -a -m "Update charts"
       - name: Init Hermit
         uses: cashapp/activate-hermit@v1.1.3
         with:
