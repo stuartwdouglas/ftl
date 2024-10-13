@@ -11,10 +11,19 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: 'stuartwdouglas/ftl-charts'
+          token: '${{ secrets.FTL_CHARTS_TOKEN }}'
       - name: Checkout
         uses: actions/checkout@v3
+        path: .ftl
         with:
           fetch-depth: 0
+
+      - name: Copy Charts
+        run: |
+          cp -r .ftl/charts/ charts/
       - name: Init Hermit
         uses: cashapp/activate-hermit@v1.1.3
       - name: Configure Git
@@ -26,14 +35,7 @@ jobs:
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
           helm repo add goharbor https://helm.goharbor.io
-      - name: build_and_deploy
-        uses: shalzz/zola-deploy-action@v0.19.2
-        env:
-          # Target branch
-          PAGES_BRANCH: gh-pages
-          # Or if publishing to the same repo, use the automatic token
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BUILD_DIR: docs
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
         env:
