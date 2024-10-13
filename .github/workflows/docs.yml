@@ -15,6 +15,7 @@ jobs:
         with:
           repository: 'stuartwdouglas/ftl-charts'
           token: '${{ secrets.FTL_CHARTS_TOKEN }}'
+          fetch-depth: 0
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -30,6 +31,7 @@ jobs:
           cp -r .ftl/charts/ charts/
           git add charts
           git commit -a -m "Update charts"
+          git push
       - name: Init Hermit
         uses: cashapp/activate-hermit@v1.1.3
         with:
