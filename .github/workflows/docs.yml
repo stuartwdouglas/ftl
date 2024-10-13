@@ -24,7 +24,7 @@ jobs:
       - name: repos
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
-          helm repo add https://helm.goharbor.io
+          helm repo add goharbor https://helm.goharbor.io
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
         env:
