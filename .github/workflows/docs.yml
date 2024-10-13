@@ -54,7 +54,7 @@ jobs:
           echo "$install" >> "$GITHUB_PATH"
           args+=(--install-dir "$install")
           
-          "$GITHUB_ACTION_PATH/cr.sh" "${args[@]}"
+          ./cr.sh "${args[@]}"
           
           if [[ -f changed_charts.txt ]]; then
               cat changed_charts.txt >> "$GITHUB_OUTPUT"
