@@ -20,7 +20,11 @@ jobs:
         with:
           fetch-depth: 0
           path: .ftl
-
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          git config pull.rebase true
       - name: Copy Charts
         run: |
           cp -r .ftl/charts/ charts/
@@ -30,11 +34,6 @@ jobs:
         uses: cashapp/activate-hermit@v1.1.3
         with:
           working-directory: .ftl
-      - name: Configure Git
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git config pull.rebase true
       - name: repos
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
