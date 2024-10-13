@@ -24,6 +24,7 @@ jobs:
       - name: Copy Charts
         run: |
           cp -r .ftl/charts/ charts/
+          find .
       - name: Init Hermit
         uses: cashapp/activate-hermit@v1.1.3
         with:
