@@ -4,14 +4,17 @@ on:
       - main
 name: Publish Docs
 jobs:
-  build:
+  release:
+    # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
+    # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     steps:
-      - name: checkout
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
-          submodules: true
+          fetch-depth: 0
       - name: Init Hermit
         uses: cashapp/activate-hermit@v1.1.3
       - name: Configure Git
