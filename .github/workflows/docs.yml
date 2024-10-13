@@ -17,9 +17,9 @@ jobs:
           token: '${{ secrets.FTL_CHARTS_TOKEN }}'
       - name: Checkout
         uses: actions/checkout@v3
-        path: .ftl
         with:
           fetch-depth: 0
+          path: .ftl
 
       - name: Copy Charts
         run: |
